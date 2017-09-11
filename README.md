@@ -1,16 +1,16 @@
-- [Getting started with JSX](#orga70ac22)
-  - [What does JSX do](#org2504720)
-- [Getting started with Virtual DOM](#org7c95980)
+- [Getting started with JSX](#org0ffa730)
+  - [What does JSX do](#org23f98b1)
+- [Getting started with Virtual DOM](#org4efdd52)
 
 
-<a id="orga70ac22"></a>
+<a id="org0ffa730"></a>
 
 # Getting started with JSX
 
 -   [What is JSX](https://jasonformat.com/wtf-is-jsx/)
 
 
-<a id="org2504720"></a>
+<a id="org23f98b1"></a>
 
 ## What does JSX do
 
@@ -43,7 +43,7 @@ function transform(nodeName, attributes, ...args) {
 
 let vdom = <div id='foo'> Hello !</div>
 
-JSON.stringify(vdom, null, 2
+JSON.stringify(vdom, null, 2)
 
 {
   "nodeName": "div",
@@ -58,7 +58,7 @@ JSON.stringify(vdom, null, 2
 ```
 
 
-<a id="org7c95980"></a>
+<a id="org4efdd52"></a>
 
 # Getting started with Virtual DOM
 
