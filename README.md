@@ -1,43 +1,64 @@
-- [Getting started with JSX](#orgeb0d807)
-  - [What does JSX do](#orgf29090e)
-- [Getting started with Virtual DOM](#org0172a47)
+- [Getting started with JSX](#org0b80f31)
+  - [What does JSX do](#org369ff7f)
+- [Getting started with Virtual DOM](#orgfad15c5)
 
 
-<a id="orgeb0d807"></a>
+<a id="org0b80f31"></a>
 
 # Getting started with JSX
 
 -   [What is JSX](https://jasonformat.com/wtf-is-jsx/)
 
 
-<a id="orgf29090e"></a>
+<a id="org369ff7f"></a>
 
 ## What does JSX do
 
 -   JSX is just a format that is used, the real work is done by the transpiler
--   the transpiler converts this form to a JSON object
--   here [babel](https://babeljs.io) transpiles the JSX to a JSON object with a node-name, its attributes and children
+-   the transpiler takes this form and calls a function with the args
 
 ```js
+/** @jsx transform
+*/
 let vdom = <div id='foo'> Hello !</div>
 
-console.log(JSON.stringify(vdom, null, 2)
+// this will be executed as
+let vdom = transform(
+  'div',
+  { id: 'foo' },
+  ' Hello !'
+)
+```
 
-/**
- *"{
- * "nodeName": "div",
- * "attributes": {
- *   "id": "foo"
- * },
- * "children": [
- *   "Hello !"
- * ]
- * }"
- */
+-   we can define the function and its return values
+-   here [babel](https://babeljs.io) transpiles the JSX and returns a JSON object with a node-name, its attributes and children
+
+```js
+/** @jsx transform
+*/
+function transform(nodeName, attributes, ...args) {
+  let children = args.length? [].concat(args):{}
+  return {nodeName, attributes, children}
+}
+
+let vdom = <div id='foo'> Hello !</div>
+
+JSON.stringify(vdom, null, 2
+
+"{
+  "nodeName": "div",
+  "attributes": {
+    "id": "foo"
+  },
+  "children": [
+    " Hello !"
+  ]
+}"
+
 ```
 
 
-<a id="org0172a47"></a>
+<a id="orgfad15c5"></a>
 
 # Getting started with Virtual DOM
 
