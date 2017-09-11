@@ -1,20 +1,22 @@
-- [Getting started with JSX](#org59234f3)
-  - [What does JSX do](#org670926c)
-- [Getting started with Virtual DOM](#org0b65bac)
+- [Getting started with JSX](#orgeb0d807)
+  - [What does JSX do](#orgf29090e)
+- [Getting started with Virtual DOM](#org0172a47)
 
 
-<a id="org59234f3"></a>
+<a id="orgeb0d807"></a>
 
 # Getting started with JSX
 
 -   [What is JSX](https://jasonformat.com/wtf-is-jsx/)
 
 
-<a id="org670926c"></a>
+<a id="orgf29090e"></a>
 
 ## What does JSX do
 
--   converts a string to a JSON object with a node-name, its attributes and childrens
+-   JSX is just a format that is used, the real work is done by the transpiler
+-   the transpiler converts this form to a JSON object
+-   here [babel](https://babeljs.io) transpiles the JSX to a JSON object with a node-name, its attributes and children
 
 ```js
 let vdom = <div id='foo'> Hello !</div>
@@ -22,19 +24,20 @@ let vdom = <div id='foo'> Hello !</div>
 console.log(JSON.stringify(vdom, null, 2)
 
 /**
- * {
- *   nodeName: 'div',
- *   attributes: {
- *     'id':'foo'
- *   },
- *   children: ['Hello!']
- * }
+ *"{
+ * "nodeName": "div",
+ * "attributes": {
+ *   "id": "foo"
+ * },
+ * "children": [
+ *   "Hello !"
+ * ]
+ * }"
  */
-
 ```
 
 
-<a id="org0b65bac"></a>
+<a id="org0172a47"></a>
 
 # Getting started with Virtual DOM
 
