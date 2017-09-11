@@ -1,15 +1,40 @@
-- [Getting started with JSX](#org110dc32)
-- [Getting started with Virtual DOM](#orgbc54c05)
+- [Getting started with JSX](#org59234f3)
+  - [What does JSX do](#org670926c)
+- [Getting started with Virtual DOM](#org0b65bac)
 
 
-<a id="org110dc32"></a>
+<a id="org59234f3"></a>
 
 # Getting started with JSX
 
 -   [What is JSX](https://jasonformat.com/wtf-is-jsx/)
 
 
-<a id="orgbc54c05"></a>
+<a id="org670926c"></a>
+
+## What does JSX do
+
+-   converts a string to a JSON object with a node-name, its attributes and childrens
+
+```js
+let vdom = <div id='foo'> Hello !</div>
+
+console.log(JSON.stringify(vdom, null, 2)
+
+/**
+ * {
+ *   nodeName: 'div',
+ *   attributes: {
+ *     'id':'foo'
+ *   },
+ *   children: ['Hello!']
+ * }
+ */
+
+```
+
+
+<a id="org0b65bac"></a>
 
 # Getting started with Virtual DOM
 
