@@ -14,3 +14,13 @@ function h(type, props, ...children) {
 //   { type: 'li', props: {}, children: ['item 1'] },
 //   { type: 'li', props: {}, children: ['item 2'] }
 // ]}
+
+const list = (
+  <ul className='list'>
+    <li>item 1</li>
+    <li>item 2</li>
+  </ul>
+)
+
+console.log(list)
+console.log(JSON.stringify(list, null, 2))
