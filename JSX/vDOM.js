@@ -26,9 +26,11 @@ function createElement(vNode) {
   return parentElement
 }
 
-function updateElement(rDom, newNode, oldNode) {
+function updateElement(rDom, newNode, oldNode, index = 0) {
   if (!oldNode) {
     rDom.appendChild(createElement(newNode))
+  } else if (!newNode) {
+    rDom.removeChild(rDom.childNodes[index])
   }
 }
 
