@@ -43,7 +43,53 @@ JSON.stringify(vdom, null, 2)
   ]
 }
 #+END_SRC
-   - klsjl
 * Getting started with Virtual DOM
-  - [[https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060][virtual dom part 1]]
-  - [[https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76][virtual dom part 2]]
+** What is a virtual DOM
+   - I'm following the article here [[https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060][virtual dom part 1]]
+   - virtual DOM is any kind of representation of the real DOM
+** Implementing virtual DOM
+   - we make a virtual DOM tree representation
+   - we diff this virtual DOM tree with our real DOM tree
+   - change our real DOM where it is needed
+   - we leverage the JSX as mentioned above
+   - a `createElement` function which adds new elements eg: <div>
+#+BEGIN_SRC js
+function createElement(vNode) {
+  if(typeof vNode === 'string') {
+    return document.createTextNode(vNode)
+  }
+  const parentElement = document.createElement(vNode.type)
+  vNode.children
+      .map(createElement)
+      .forEach(parentElement.appendChild.bind(parentElement))
+  return parentElement
+}
+#+END_SRC
+   - a `changed` function which compares 2 tree node elements
+#+BEGIN_SRC js
+function changed(node1, node2) {
+  return typeof node1 !== typeof node2 ||
+    typeof node1 === 'string' && node1 !== node2 ||
+    node1.type !== node2.type
+}
+#+END_SRC
+   - an `updateElement` function which updates our real DOM where necessary
+#+BEGIN_SRC js
+function updateElement(rDom, newNode, oldNode, index = 0) {
+  if (!oldNode) {
+    rDom.appendChild(createElement(newNode))
+  } else if (!newNode) {
+    rDom.removeChild(rDom.childNodes[index])
+  } else if (changed(newNode, oldNode)) {
+    rDom.replaceChild(createElement(newNode), rDom.childNodes[index])
+  } else if (newNode.type) {
+    const newLength = newNode.children.length
+    const oldLength = oldNode.children.length
+    for (let i = 0; i < newLength || i < oldLength; i++) {
+      updateElement(rDom.childNodes[index], newNode.children[i], oldNode.children[i], i)
+    }
+  }
+}
+#+END_SRC
+** Virtual DOM advanced
+   - [[https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76][virtual dom part 2]]
