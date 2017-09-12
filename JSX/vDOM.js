@@ -31,6 +31,8 @@ function updateElement(rDom, newNode, oldNode, index = 0) {
     rDom.appendChild(createElement(newNode))
   } else if (!newNode) {
     rDom.removeChild(rDom.childNodes[index])
+  } else if (changed(newNode, oldNode)) {
+    rDom.replaceChild(createElement(newNode), rDom.childNodes[index])
   }
 }
 
