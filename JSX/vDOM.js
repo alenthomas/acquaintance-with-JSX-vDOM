@@ -33,6 +33,12 @@ function updateElement(rDom, newNode, oldNode, index = 0) {
     rDom.removeChild(rDom.childNodes[index])
   } else if (changed(newNode, oldNode)) {
     rDom.replaceChild(createElement(newNode), rDom.childNodes[index])
+  } else if (newNode.type) {
+    const newLength = newNode.children.length
+    const oldLength = oldNode.children.length
+    for (let i = 0; i < newLength || i < oldLength; i++) {
+      updateElement(rDom.childNodes[index], newNode.children[i], oldNode.children[i], i)
+    }
   }
 }
 
