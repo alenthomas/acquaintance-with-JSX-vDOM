@@ -15,6 +15,13 @@ function h(type, props, ...children) {
 //   { type: 'li', props: {}, children: ['item 2'] }
 // ]}
 
+function createElement(node) {
+  if(typeof node === 'string') {
+    return document.createTextNode(node)
+  }
+  return document.createElement(node.type)
+}
+
 const list = (
   <ul className='list'>
     <li>item 1</li>
