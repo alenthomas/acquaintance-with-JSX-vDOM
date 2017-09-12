@@ -26,6 +26,12 @@ function createElement(vNode) {
   return parentElement
 }
 
+function updateElement(rDom, newNode, oldNode) {
+  if (!oldNode) {
+    rDom.appendChild(createElement(newNode))
+  }
+}
+
 const list = (
   <ul className='list'>
     <li>item 1</li>
