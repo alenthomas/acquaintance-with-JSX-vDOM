@@ -15,11 +15,15 @@ function h(type, props, ...children) {
 //   { type: 'li', props: {}, children: ['item 2'] }
 // ]}
 
-function createElement(node) {
-  if(typeof node === 'string') {
-    return document.createTextNode(node)
+function createElement(vNode) {
+  if(typeof vNode === 'string') {
+    return document.createTextNode(vNode)
   }
-  return document.createElement(node.type)
+  const parentElement = document.createElement(vNode.type)
+  vNode.children
+      .map(createElement)
+      .forEach(parentElement.appendChild.bind(parentElement))
+  return parentElement
 }
 
 const list = (
@@ -28,6 +32,9 @@ const list = (
     <li>item 2</li>
   </ul>
 )
+
+const root = document.getElementById('root')
+root.appendChild(createElement(list))
 
 console.log(list)
 console.log(JSON.stringify(list, null, 2))
