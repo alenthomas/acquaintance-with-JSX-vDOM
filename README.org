@@ -1,7 +1,7 @@
 #+TITLE: Getting started with JSX
 #+AUTHOR: Alen Thomas
 
-** Getting started with JSX
+** What is JSX
   - A good introduction to JSX can be found here [[https://jasonformat.com/wtf-is-jsx/][What is JSX]]
 ** What is JSX; tldr
    - JSX is just a format that is used, the real work is done by the transpiler
