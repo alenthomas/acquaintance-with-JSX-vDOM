@@ -1,96 +1,29 @@
-#+TITLE: Getting started with JSX
+#+TITLE: Building your own React
 #+AUTHOR: Alen Thomas
 
-** What is JSX
-  - A good introduction to JSX can be found here [[https://jasonformat.com/wtf-is-jsx/][What is JSX]]
-** What is JSX; tldr
-   - JSX is just a format that is used, the real work is done by the transpiler
-   - the transpiler takes this form and calls a function with the args
+** Step One: The virtual DOM representation
+   - React supports stateless components in the form of pure functions
 #+BEGIN_SRC js
-/** @jsx transform
-*/
-let vdom = <div id='foo'>Hello !</div>;
+const WelcomeComponent = ({ name }) => <div>Welcome {name}!</div>;
 
-// this will be executed as
-let vdom = transform(
-  'div',
-  { id: 'foo' },
-  'Hello !'
-);
-#+END_SRC
-   - we can define the function and its return values
-   - here [[https://babeljs.io][babel]] transpiles the JSX and returns a JSON object with a node-name, its attributes and children
-#+BEGIN_SRC js
-/** @jsx transform
-*/
-function transform(nodeName, attributes, ...args) {
-  let children = args.length? [].concat(args):{};
-  return {nodeName, attributes, children};
-}
-
-let vdom = <div id='foo'>Hello !</div>;
-
-JSON.stringify(vdom, null, 2);
-
-{
-  "nodeName": "div",
-  "attributes": {
-    "id": "foo"
-  },
-  "children": [
-    "Hello !"
-  ]
-}
-#+END_SRC
-* Getting started with Virtual DOM
-** What is a virtual DOM
-   - I'm following the article here [[https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060][virtual dom part 1]]
-   - virtual DOM is any kind of representation of the real DOM
-** Implementing virtual DOM
-   - we make a virtual DOM tree representation
-   - we diff this virtual DOM tree with our real DOM tree
-   - change our real DOM where it is needed
-   - we leverage the JSX as mentioned above
-   - a =createElement= function which adds new elements eg: <div>
-#+BEGIN_SRC js
-function createElement(vNode) {
-  if(typeof vNode === 'string') {
-    return document.createTextNode(vNode);
-  }
-  const parentElement = document.createElement(vNode.type);
-  vNode.children
-    .map(createElement)
-    .forEach(parentElement.appendChild.bind(parentElement));
-  return parentElement;
-}
-#+END_SRC
-   - a =changed= function which compares 2 tree node elements
-#+BEGIN_SRC js
-function changed(node1, node2) {
-  return typeof node1 !== typeof node2 ||
-         typeof node1 === 'string' && node1 !== node2 ||
-         node1.type !== node2.type;
-}
-#+END_SRC
-   - an =updateElement= function which updates our real DOM where necessary
-#+BEGIN_SRC js
-function updateElement(rDom, newNode, oldNode, index = 0) {
-  if (!oldNode) {
-    rDom.appendChild(
-      createElement(newNode)
-    );
-  } else if (!newNode) {
-    rDom.removeChild(rDom.childNodes[index]);
-  } else if (changed(newNode, oldNode)) {
-    rDom.replaceChild(createElement(newNode), rDom.childNodes[index]);
-  } else if (newNode.type) {
-    const newLength = newNode.children.length;
-    const oldLength = oldNode.children.length;
-    for (let i = 0; i < newLength || i < oldLength; i++) {
-      updateElement(rDom.childNodes[index], newNode.children[i], oldNode.children[i], i);
-    }
+const RootComponent = ({ user }) => {
+  if (user) {
+    return <WelcomeComponent name = { user.name } />;
+  } else {
+    return <div>Please, Login</div>;
   }
 }
 #+END_SRC
-** Virtual DOM advanced
-   - a more practical virtual dom tutorial can be found [[https://medium.com/@deathmood/write-your-virtual-dom-2-props-events-a957608f5c76][here]]
+
+   - This also allows cool compositions
+#+BEGIN_SRC js
+const welcome = name => 'Welcome ${ name } !';
+
+const root = user => {
+  if (user) {
+    return welcome(user.name)
+  } else {
+    return 'Please Login';
+  }
+}
+#+END_SRC
