@@ -1,6 +1,9 @@
+/** @jsx h */
 
-const WelcomeComponent = ({ name }) => ({
-  type: 'div',
-  props: {},
-  children: [`Welcome ${name}`]
+const h = (type, props={}, children=[]) => ({
+  type,
+  props,
+  children
 });
+
+const WelcomeComponent = ({ name }) => h('div', {}, [`Welcome ${name}`]);
