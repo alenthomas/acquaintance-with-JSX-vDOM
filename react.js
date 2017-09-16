@@ -6,6 +6,24 @@ const h = (type, props={}, children=[]) => ({
   children
 });
 
+const memoize = component => {
+  let lastProps = null;
+  let lastResult = null;
+
+  return props => {
+    if (!shallowEqual(props, lastProps)) {
+      lastResult = component(props);
+      lastProps = props;
+
+      lastResult.memoized = true;
+    } else {
+      lastResult.memoized = false;
+    }
+    return lastResult;
+  };
+};
+
+
 export const createVDOM = (element, id='.') => {
   const newElement = {
     ...element,
@@ -15,7 +33,11 @@ export const createVDOM = (element, id='.') => {
 
   if (typeof element.type === 'function') {
     const subtree = newElement.type(element.props);
+    if (subtree.memoized) {
+      return subtree;
+    } else {
     return createVDOM(subtree, id);
+    }
   } else {
     return newElement;
   }
