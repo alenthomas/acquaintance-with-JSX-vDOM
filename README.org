@@ -1,7 +1,7 @@
 #+TITLE: Building your own React
 #+AUTHOR: Alen Thomas
 
-** Step One: The virtual DOM representation
+** Step one: The virtual DOM representation
    - React supports stateless components in the form of pure functions
 #+BEGIN_SRC js
 const WelcomeComponent = ({ name }) => <div>Welcome {name}!</div>;
